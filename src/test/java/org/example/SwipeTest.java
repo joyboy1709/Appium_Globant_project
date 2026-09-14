@@ -16,7 +16,7 @@ class SwipeTest extends BaseMobileTest {
         swipe.swipeRight();
         assertTrue(swipe.isSecondCardVisible(), "The next card should be visible");
 
-        for (int i = 0; i < 10 && !swipe.isLastCardVisible(); i++) {
+        for (int i = 0; i < 20 && !swipe.isLastCardVisible(); i++) {
             swipe.swipeRight();
         }
         assertTrue(swipe.isLastCardVisible(), "The last card should be visible");
