@@ -4,8 +4,10 @@ import io.appium.java_client.AppiumBy;
 import io.appium.java_client.android.AndroidDriver;
 import org.openqa.selenium.Dimension;
 import org.openqa.selenium.Point;
+import org.openqa.selenium.WebElement;
 import org.openqa.selenium.interactions.PointerInput;
 import org.openqa.selenium.interactions.Sequence;
+import org.openqa.selenium.remote.RemoteWebElement;
 
 import java.time.Duration;
 import java.util.Collections;
@@ -39,11 +41,10 @@ public class SwipePage extends BasePage {
     }
 
     public void swipeRight() {
+        WebElement carousel = wait.until(d -> d.findElement(
+                AppiumBy.xpath("//*[@resource-id='Carousel']")));
         Map<String, Object> arguments = new HashMap<>();
-        arguments.put("left", 0);
-        arguments.put("top", 1033);
-        arguments.put("width", 1080);
-        arguments.put("height", 840);
+        arguments.put("elementId", ((RemoteWebElement) carousel).getId());
         arguments.put("direction", "left");
         arguments.put("percent", 0.8);
         driver.executeScript("mobile: swipeGesture", arguments);
@@ -57,7 +58,7 @@ public class SwipePage extends BasePage {
     private boolean isActiveCard(String resourceId) {
         try {
             return driver.findElement(AppiumBy.xpath(
-                    "//*[@resource-id='" + resourceId + "']")).getRect().x <= 10;
+                    "//*[@resource-id='" + resourceId + "']")).getRect().width > 800;
         } catch (RuntimeException ignored) {
             return false;
         }
