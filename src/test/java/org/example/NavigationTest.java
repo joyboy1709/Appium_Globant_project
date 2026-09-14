@@ -21,9 +21,10 @@ class NavigationTest extends BaseMobileTest {
         assertTrue(new HomePage(driver).isDisplayed("Swipe-screen"));
 
         home.openWebView();
-        assertTrue(new HomePage(driver).isDisplayed("Webview-screen"));
+        assertTrue(driver.getPageSource().contains("android.webkit.WebView"),
+                "The native WebView should be displayed");
 
         home.openDrag();
-        assertTrue(new HomePage(driver).isDisplayed("Drag-screen"));
+        assertTrue(new HomePage(driver).isDisplayed("Drag-drop-screen"));
     }
 }

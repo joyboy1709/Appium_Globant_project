@@ -16,7 +16,8 @@ class AuthenticationTest extends BaseMobileTest {
         LoginPage login = openLogin();
         login.selectSignUp();
         login.signUp(email, password);
-        assertTrue(login.isLoginScreenVisible(), "The login screen should remain available after sign up");
+        assertTrue(login.acceptSignUpAlert().contains("Signed Up"),
+                "The sign up success alert should be displayed");
     }
 
     @Test
@@ -26,9 +27,11 @@ class AuthenticationTest extends BaseMobileTest {
         LoginPage login = openLogin();
         login.selectSignUp();
         login.signUp(email, password);
+        assertTrue(login.acceptSignUpAlert().contains("Signed Up"));
         login.selectLogin();
         login.login(email, password);
-        assertTrue(new HomePage(driver).hasHomeTab(), "A successful login should show the home tab");
+        assertTrue(login.acceptSuccessAlert().equals("Success"),
+                "The login success alert should be displayed");
     }
 
     private LoginPage openLogin() {

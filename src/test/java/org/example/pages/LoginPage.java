@@ -43,6 +43,14 @@ public class LoginPage extends BasePage {
         wait.until(d -> d.findElement(LOGIN_BUTTON)).click();
     }
 
+    public String acceptSuccessAlert() {
+        return acceptNativeAlert("Success");
+    }
+
+    public String acceptSignUpAlert() {
+        return acceptNativeAlert("Signed Up!");
+    }
+
     public boolean isLoginScreenVisible() {
         return isDisplayed("Login-screen");
     }
