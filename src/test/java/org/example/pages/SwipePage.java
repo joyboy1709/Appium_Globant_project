@@ -1,6 +1,5 @@
 package org.example.pages;
 
-import io.appium.java_client.AppiumBy;
 import io.appium.java_client.android.AndroidDriver;
 import org.openqa.selenium.Dimension;
 import org.openqa.selenium.Point;
@@ -21,19 +20,23 @@ public class SwipePage extends BasePage {
     }
 
     public boolean isFirstCardVisible() {
-        return isDisplayed("card-1");
+        return isTextDisplayed("FULLY OPEN SOURCE");
     }
 
     public boolean isLastCardVisible() {
-        return isDisplayed("card-4");
+        return isTextDisplayed("COMPATIBLE");
+    }
+
+    public boolean isSecondCardVisible() {
+        return isTextDisplayed("GREAT COMMUNITY");
     }
 
     public boolean isFoundMessageVisible() {
-        return isDisplayed("You found me!!!");
+        return isTextDisplayed("You found me!!!");
     }
 
     public void swipeRight() {
-        swipe(0.80, 0.20, 0.50, 0.35);
+        swipe(0.80, 0.60, 0.20, 0.60);
     }
 
     public void swipeUp() {
@@ -53,5 +56,15 @@ public class SwipePage extends BasePage {
                 PointerInput.Origin.viewport(), end.x, end.y));
         gesture.addAction(finger.createPointerUp(PointerInput.MouseButton.LEFT.asArg()));
         driver.perform(Collections.singletonList(gesture));
+        pauseAfterSwipe();
+    }
+
+    private void pauseAfterSwipe() {
+        try {
+            Thread.sleep(800);
+        } catch (InterruptedException exception) {
+            Thread.currentThread().interrupt();
+            throw new IllegalStateException("Swipe animation was interrupted", exception);
+        }
     }
 }
