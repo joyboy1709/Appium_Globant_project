@@ -1,5 +1,6 @@
 package org.example.pages;
 
+import io.appium.java_client.AppiumBy;
 import io.appium.java_client.android.AndroidDriver;
 import org.openqa.selenium.Dimension;
 import org.openqa.selenium.Point;
@@ -8,6 +9,8 @@ import org.openqa.selenium.interactions.Sequence;
 
 import java.time.Duration;
 import java.util.Collections;
+import java.util.HashMap;
+import java.util.Map;
 
 public class SwipePage extends BasePage {
     public SwipePage(AndroidDriver driver) {
@@ -20,15 +23,15 @@ public class SwipePage extends BasePage {
     }
 
     public boolean isFirstCardVisible() {
-        return isTextDisplayed("FULLY OPEN SOURCE");
+        return isActiveCard("__CAROUSEL_ITEM_0__");
     }
 
     public boolean isLastCardVisible() {
-        return isTextDisplayed("COMPATIBLE");
+        return isActiveCard("__CAROUSEL_ITEM_5__");
     }
 
     public boolean isSecondCardVisible() {
-        return isTextDisplayed("GREAT COMMUNITY");
+        return isActiveCard("__CAROUSEL_ITEM_1__");
     }
 
     public boolean isFoundMessageVisible() {
@@ -36,11 +39,28 @@ public class SwipePage extends BasePage {
     }
 
     public void swipeRight() {
-        swipe(0.80, 0.60, 0.20, 0.60);
+        Map<String, Object> arguments = new HashMap<>();
+        arguments.put("left", 0);
+        arguments.put("top", 1033);
+        arguments.put("width", 1080);
+        arguments.put("height", 840);
+        arguments.put("direction", "left");
+        arguments.put("percent", 0.8);
+        driver.executeScript("mobile: swipeGesture", arguments);
+        pauseAfterSwipe();
     }
 
     public void swipeUp() {
         swipe(0.50, 0.80, 0.50, 0.20);
+    }
+
+    private boolean isActiveCard(String resourceId) {
+        try {
+            return driver.findElement(AppiumBy.xpath(
+                    "//*[@resource-id='" + resourceId + "']")).getRect().x <= 10;
+        } catch (RuntimeException ignored) {
+            return false;
+        }
     }
 
     private void swipe(double startX, double startY, double endX, double endY) {
