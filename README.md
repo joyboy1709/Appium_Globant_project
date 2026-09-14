@@ -51,6 +51,17 @@ the project compiles independently of them.
 Each authentication test creates its own random account, so login does not depend
 on the signup test execution order.
 
+## Execution evidence
+
+The complete suite passed against the Android emulator:
+
+- 4 tests run
+- 0 failures
+- 0 errors
+- Build success
+
+![Successful Appium test execution](docs/evidence/full-suite-success.png)
+
 ## Branch and commit flow
 
 The implementation is organized as incremental work:
